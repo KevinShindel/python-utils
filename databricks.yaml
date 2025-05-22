@@ -1,0 +1,83 @@
+bundle:
+  name: demo_01_bundle
+
+include:
+
+
+resources:
+  jobs:
+    my_simple_dab:
+      name: my_simple_dab
+      tasks:
+        - task_key: create_bronze_table
+          notebook_task:
+            notebook_path: ./src/create_bronze_table.ipynb
+            source: WORKSPACE
+        - task_key: create_silver_table
+          depends_on:
+            - task_key: create_bronze_table
+          notebook_task:
+            notebook_path: ./src/create_silver_table.ipynb
+            source: WORKSPACE
+      parameters:
+        - name: display_target # dbutils.widgets.get('display_target')
+          default: development
+        - name: catalog_name # dbutils.widgets.get('catalog_name')
+          default: my_catalog
+
+targets:
+  development:
+    mode: development
+    default: true
+    workspace:
+      host: https://dev.cloud.databricks.com
+    variables:
+      target_catalog: ${var.catalog_dev}
+
+
+variables:
+  my_variable_name:
+    description: My variable name
+    default: variable_123
+    type: string
+
+  my_cluster:
+    description: "My cluster config"
+    type: complex
+    default:
+      spark_version: "15.4x-scala2.11"
+      node_type_id: "Standard_DS3_v2"
+      num_workers: 2
+
+  dev_catalog_path:
+    description: "My dev catalog"
+    default: ${var.my_variable_name}_dev
+
+  my_cluster_id:
+    description: "Get cluster ID from var"
+    lookup:
+      cluster: my_cluster
+
+  bundle_name:
+    description: "Bundle name"
+    default: ${bundle.name}
+
+  bundle_target:
+    description: "Bundle target"
+    default: ${bundle.target}
+
+  workspace_file_path:
+    default: ${workspace.file_path}
+
+  root_path:
+    default: ${workspace.root_path}
+
+  job_id:
+    default: ${resources.jobs<job-name>.id}
+
+  model_name:
+    default: ${resources.models.<model-name>.name}
+
+  pipeline_name:
+    default: ${resources.pipelines.<pipeline-name>.name}
+
