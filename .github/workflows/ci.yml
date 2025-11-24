@@ -34,7 +34,7 @@ jobs:
       # 4. Run unittests with coverage
       - name: Run tests with coverage
         run: |
-          coverage run -m unittest discover
+          coverage run -m pytest
           coverage report -m
           coverage xml
 
@@ -44,4 +44,4 @@ jobs:
 
       # 6. Run flake8 (syntax / style check)
       - name: Run flake8
-        run: flake8 . --max-line-length=120 --exclude=*.pyc,.venv
+        run: flake8 .
