@@ -2,9 +2,9 @@ import asyncio
 
 # Runners
 if __name__ == '__main__':
-
     coro = asyncio.sleep(1)
     asyncio.run(coro, debug=True)
+
 
 # Runner context manager
 # A context manager that simplifies multiple async function calls in the same context.
@@ -12,6 +12,7 @@ if __name__ == '__main__':
 async def main():
     await asyncio.sleep(1)
     print('hello')
+
 
 with asyncio.Runner() as runner:
     runner.run(main())

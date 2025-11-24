@@ -1,5 +1,6 @@
 from functools import cached_property  # Requires Python 3.8 or newer
 
+
 class MyClass:
     def __init__(self, value):
         self.value = value
@@ -11,8 +12,8 @@ class MyClass:
         result = self.value ** 2
         return result
 
-if __name__ == '__main__':
 
+if __name__ == '__main__':
     # Create an instance of MyClass
     obj = MyClass(10)
 

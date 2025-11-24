@@ -1,6 +1,7 @@
 """Basic pickle exmaple"""
 import pickle
-from data import *
+
+from demo.serialization.data import move1, move2, move3, move4
 
 print(f'move1 = {move1}')
 
@@ -11,7 +12,6 @@ print(f'move1d (from data) = {move1d}')
 # serialize to file
 with open('move1.pkl', 'wb') as out:
     pickle.dump(move1, out)
-
 
 # de-serialize from file
 with open('move1.pkl', 'rb') as fp:

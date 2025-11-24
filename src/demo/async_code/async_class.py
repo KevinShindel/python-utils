@@ -34,7 +34,6 @@ class MultiAsyncExecute:
         return asyncio.run(gather_results())
 
 
-
 if __name__ == '__main__':
     # Instantiate the class and call the run method
     executor = MultiAsyncExecute(sample_function, ["item1", "item2", "item3"])

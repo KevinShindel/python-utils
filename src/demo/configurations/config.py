@@ -20,7 +20,6 @@ if sys.platform == 'win32':
 else:
     num_workers = 100
 
-
 # Clean up namespace
 del __doc__
 del environ

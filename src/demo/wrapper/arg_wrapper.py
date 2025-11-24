@@ -9,7 +9,9 @@ def my_decorator(*decorator_args, **decorator_kwargs):
             result = func(*args, **kwargs)  # Call the target function
             print("Function call completed.")
             return result
+
         return wrapper
+
     return decorator
 
 

@@ -1,4 +1,7 @@
 """Generate metric in YAML & TOML"""
+from datetime import datetime
+from sys import stdout
+
 import toml
 import yaml
 
@@ -11,7 +14,6 @@ metric = {
         'version': '1.3.4',
     },
 }
-
 
 print('YAML')
 print(yaml.dump(metric, default_flow_style=False, sort_keys=False))

@@ -3,6 +3,7 @@ import shelve
 
 from data import move1, move2, move3, move4
 
+
 def main():
     db = shelve.open('dance.db')
     db['1'] = move1
@@ -15,6 +16,7 @@ def main():
 
     db = shelve.open('dance.db')
     print(db['1'])
+
 
 if __name__ == '__main__':
     main()

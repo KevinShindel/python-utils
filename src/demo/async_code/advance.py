@@ -2,14 +2,14 @@ import asyncio
 import time
 
 
-
 async def say_after(delay: int, content: str):
     await asyncio.sleep(delay)
     print(content)
     return delay ** 2
 
+
 async def main():
-    async with asyncio.TaskGroup() as tg: # Tasks are used to schedule coroutines concurrently.
+    async with asyncio.TaskGroup() as tg:  # Tasks are used to schedule coroutines concurrently.
         task1 = tg.create_task(
             say_after(1, 'hello'))
 
@@ -21,6 +21,7 @@ async def main():
     # To await is implicit when the context manager exits.
     print(f"Both tasks have completed now: {task1.result()}, {task2.result()}")
     print(f"finished at {time.strftime('%X')}")
+
 
 # Running Tasks Concurrently
 async def concurrent_run():
@@ -49,10 +50,11 @@ async def concurrent_run():
 async def shield_task():
     task = asyncio.create_task(say_after(1, 'shield'))
     try:
-        res = await asyncio.shield(task) # Protect an awaitable object from being cancelled.
+        res = await asyncio.shield(task)  # Protect an awaitable object from being cancelled.
     except asyncio.CancelledError:
         res = None
     return res
+
 
 # Timeouts
 # - asyncio.timeout
@@ -70,6 +72,7 @@ async def timeout_main():
         print("The long operation timed out, but we've handled it.")
 
     print("This statement will run regardless.")
+
 
 async def main():
     try:
@@ -97,25 +100,20 @@ aws = []
 # If no future raises an exception then it is equivalent to ALL_COMPLETED.
 # asyncio.ALL_COMPLETED The function will return when all futures finish or are cancelled.
 
-asyncio.as_completed(aws, *[], timeout=None) # Run awaitable objects in the aws iterable concurrently. The returned object can be iterated to obtain the results of the awaitables
+asyncio.as_completed(aws, *[],
+                     timeout=None)  # Run awaitable objects in the aws iterable concurrently. The returned object can be iterated to obtain the results of the awaitables
+
+
 # as they finish.
 
 def open_connection(ip, port):
     pass
 
+
 ipv4_connect = asyncio.create_task(open_connection("127.0.0.1", 80))
 ipv6_connect = asyncio.create_task(open_connection("::1", 80))
 tasks = [ipv4_connect, ipv6_connect]
 
-async for earliest_connect in asyncio.as_completed(tasks):
-    # earliest_connect is done. The result can be obtained by
-    # awaiting it or calling earliest_connect.result()
-    # reader, writer = await earliest_connect
-
-    if earliest_connect is ipv6_connect:
-        print("IPv6 connection established.")
-    else:
-        print("IPv4 connection established.")
 
 # Running in Threads
 # async asyncio.to_thread(func, /, *args, **kwargs) # Asynchronously run function func in a separate thread
@@ -126,6 +124,7 @@ def blocking_io():
     # IO-bound operation, such as file operations.
     time.sleep(1)
     print(f"blocking_io complete at {time.strftime('%X')}")
+
 
 async def main():
     print(f"started main at {time.strftime('%X')}")
@@ -153,7 +152,7 @@ asyncio.run(main())
 # Scheduling From Other Threads
 coro = asyncio.sleep(1, result=3)
 loop = asyncio.get_event_loop()
-future = asyncio.run_coroutine_threadsafe(coro, loop) # Submit a coroutine to the given event loop. Thread-safe.
+future = asyncio.run_coroutine_threadsafe(coro, loop)  # Submit a coroutine to the given event loop. Thread-safe.
 timeout = 1
 
 try:
@@ -168,27 +167,31 @@ else:
 
 # Introspection
 asyncio.current_task(loop=None)  # Return the currently running Task instance, or None if no task is running.
-asyncio.all_tasks(loop=None) # Return a set of not yet finished Task objects run by the loop.
+asyncio.all_tasks(loop=None)  # Return a set of not yet finished Task objects run by the loop.
 obj = future.result()
-asyncio.iscoroutine(obj) # Return True if obj is a coroutine object.
+asyncio.iscoroutine(obj)  # Return True if obj is a coroutine object.
+
 
 def callback_function(_obj):
     pass
 
+
 # Task Object
-task = asyncio.Task(coro, *[], loop=None, name=None, context=None) # A Future-like object that runs a Python coroutine. Not thread-safe.
-task.done() # Return True if the Task is done.
-task.cancel() # Canceling task
-task.result() # return result of the task
-task.exception() # Return the exception of the Task.
-task.add_done_callback(callback_function) # Add a callback to be run when the Task is done.
-task.remove_done_callback(callback_function) # Remove callback from the callbacks list.
-task.get_stack() # Return the list of stack frames for this Task.
-task.print_stack() # Print the stack or traceback for this Task.
-task.get_coro() # Return the coroutine object wrapped by the Task.
+task = asyncio.Task(coro, *[], loop=None, name=None,
+                    context=None)  # A Future-like object that runs a Python coroutine. Not thread-safe.
+task.done()  # Return True if the Task is done.
+task.cancel()  # Canceling task
+task.result()  # return result of the task
+task.exception()  # Return the exception of the Task.
+task.add_done_callback(callback_function)  # Add a callback to be run when the Task is done.
+task.remove_done_callback(callback_function)  # Remove callback from the callbacks list.
+task.get_stack()  # Return the list of stack frames for this Task.
+task.print_stack()  # Print the stack or traceback for this Task.
+task.get_coro()  # Return the coroutine object wrapped by the Task.
 task.get_context()  # Return the contextvars.Context object associated with the task.
-task.get_name(); task.set_name() # Return the name of the Task. \ Set the name of the Task.
-task.cancelled() # Return True if the Task is cancelled.
+task.get_name()  # Return the name of the Task.
+task.set_name()  # Return the name of the Task. \ Set the name of the Task.
+task.cancelled()  # Return True if the Task is cancelled.
 
 if __name__ == '__main__':
     # asyncio.run(main())

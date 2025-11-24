@@ -17,7 +17,6 @@ for label in root.findall('./*/label'):  # find children by XPATH
     key, value = label.get('key'), label.get('value')
     print(f'key = {key!r}, value={value!r}')
 
-
 # serialize
 metric = {
     'time': datetime.now(),

@@ -3,10 +3,10 @@ import requests
 import asyncio
 import aiohttp
 
-available_regions = ['US','BR','AU','CA','FR','DE','HK','IN','IT','ES','GB','SG']
+available_regions = ['US', 'BR', 'AU', 'CA', 'FR', 'DE', 'HK', 'IN', 'IT', 'ES', 'GB', 'SG']
+
 
 def get_data(_region: str):
-
     url = "https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v2/get-timeseries"
 
     querystring = {"symbol": "IBM", "region": _region}
@@ -22,8 +22,8 @@ def get_data(_region: str):
     time.sleep(1)
     return response.json()
 
-async def async_get_data(_region: str):
 
+async def async_get_data(_region: str):
     url = "https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v2/get-timeseries"
 
     querystring = {"symbol": "IBM", "region": _region}
@@ -38,6 +38,7 @@ async def async_get_data(_region: str):
     print(f'[+] Data for region: {_region} is parsed!')
     await asyncio.sleep(1)
     return response.json()
+
 
 async def gather_data():
     tasks = []
@@ -61,8 +62,9 @@ async def aiohttp_get_data(_region: str):
     async with aiohttp.ClientSession() as session:
         async with session.get(url, headers=headers, params=querystring) as response:
             print(f'[+] Data for region: {_region} is parsed!')
-            await asyncio.sleep(1) # avoid throttling
+            await asyncio.sleep(1)  # avoid throttling
             return await response.json()
+
 
 async def async_main():
     start = time.perf_counter()
@@ -75,9 +77,7 @@ async def async_main():
     print(f'Task done at {round(end - start, 2)} seconds')
 
 
-
 if __name__ == '__main__':
-
     # start = time.perf_counter()
     # for region in available_regions:
     #     get_data(region)

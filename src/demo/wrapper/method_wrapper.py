@@ -22,8 +22,8 @@ class MyClass:
     def my_method(self, greeting):
         print(f"{greeting}, {self.name}!")
 
-if __name__ == '__main__':
 
+if __name__ == '__main__':
     # Create an instance of MyClass
     obj = MyClass("Alice")
 

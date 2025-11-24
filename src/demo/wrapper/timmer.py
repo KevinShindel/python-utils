@@ -1,6 +1,7 @@
 from time import perf_counter
 from functools import wraps
 
+
 def timer(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
@@ -11,7 +12,9 @@ def timer(func):
         arg = str(*args)
         print(f'{func.__name__}({arg}) = {result} -> {duration:.8f}s')
         return result
+
     return wrapper
+
 
 @timer
 def fib(n):
@@ -19,6 +22,7 @@ def fib(n):
     if n < 2:
         return n
     else:
-        return fib(n-1) + fib(n-2)
+        return fib(n - 1) + fib(n - 2)
+
 
 fib(20)

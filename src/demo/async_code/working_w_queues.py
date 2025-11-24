@@ -4,6 +4,7 @@ from random import uniform
 import time
 import random
 
+
 async def worker(name, queue):
     while True:
         # Get a "work item" out of the queue.
@@ -50,12 +51,14 @@ async def queue_main():
     print(f'3 workers slept in parallel for {total_slept_for:.2f} seconds')
     print(f'total expected sleep time: {total_sleep_time:.2f} seconds')
 
+
 def lifo_queue():
     queue = LifoQueue()
     queue.put_nowait(10)
     queue.put_nowait(20)
     queue.put_nowait(30)
-    assert queue.get_nowait() == 30 # must return the last message from queue
+    assert queue.get_nowait() == 30  # must return the last message from queue
+
 
 def priority_queue():
     queue = PriorityQueue()
@@ -65,7 +68,8 @@ def priority_queue():
     queue.put_nowait((2, {'some2': 'value2'}))
 
     data = queue.get_nowait()
-    assert data == (1, {'some': 'value1'}) # must return 1 by ordering the queue
+    assert data == (1, {'some': 'value1'})  # must return 1 by ordering the queue
+
 
 async def producer(queue, producer_id, num_items):
     """A producer that puts items into the queue."""
@@ -77,6 +81,7 @@ async def producer(queue, producer_id, num_items):
         print(f"[Producer {producer_id}] Produced: {item}")
     print(f"[Producer {producer_id}] Finished producing {num_items} items.")
 
+
 async def consumer(queue, consumer_id):
     """A consumer that takes items from the queue and processes them."""
     while True:
@@ -86,10 +91,11 @@ async def consumer(queue, consumer_id):
         await asyncio.sleep(random.uniform(0.2, 1.0))  # Simulate processing time
         queue.task_done()  # Indicate the item has been processed
 
+
 async def main():
     queue = asyncio.Queue()  # Shared queue
-    num_producers = 12        # Number of producers
-    num_consumers = 3        # Number of consumers
+    num_producers = 12  # Number of producers
+    num_consumers = 3  # Number of consumers
     num_items_per_producer = 5
 
     # Create producer tasks
@@ -115,11 +121,11 @@ async def main():
         c.cancel()
     await asyncio.gather(*consumers, return_exceptions=True)
 
+
 # Run the program
 asyncio.run(main())
 
 if __name__ == '__main__':
-
     # asyncio.run(queue_main())
     # lifo_queue()
     # priority_queue()

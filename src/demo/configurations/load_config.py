@@ -11,6 +11,7 @@ def load_config(path):
     exec(data, {}, ns)
     return SimpleNamespace(**ns)
 
+
 if __name__ == '__main__':
     config = load_config('config.py')
 

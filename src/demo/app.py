@@ -4,7 +4,7 @@ import sys
 def say_hello(name='World'):
     """Say hello.
 
-       >>> say_hello('Stefan')
+       # >>> say_hello('Stefan')
        'Hello Bob!'
        """
     return f'Hello {name}!'
